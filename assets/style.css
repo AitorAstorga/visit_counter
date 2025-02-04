@@ -1,0 +1,13 @@
+/* Colors based on nyakotech.com*/
+:root {
+  /* Background Colors */
+  --background-page: #000000; /* General background */
+  --background-body: #18181b; /* Body background */
+  --background-navbar: #64094d; /* Navbar background */
+
+  /* Accent Colors */
+  --accent-primary: #DC26B6;
+
+  /* Hover Colors */
+  --hover-primary: #C323B8;
+}
