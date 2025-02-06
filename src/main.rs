@@ -2,24 +2,21 @@
 extern crate rocket;
 
 mod models;
+mod persistent_counter;
 mod svg_generator;
 
 use models::{CounterResponse, CounterSetRequest, SvgOptions};
+use persistent_counter::PersistentCounterMap;
 use rocket::http::ContentType;
 use rocket::serde::json::Json;
 use rocket::State;
-use std::collections::HashMap;
-use std::sync::Mutex;
 
 // Optionally load environment variables from .env.
 fn init_env() {
     dotenv::dotenv().ok();
 }
 
-/// Shared counter storage.
-type CounterMap = Mutex<HashMap<String, u64>>;
-
-/// Look for the header "x-api-key" and verify that its value matches the value of the `API_KEY` environment variable.
+/// Verify that the "x-api-key" header matches the API_KEY environment variable.
 pub struct ApiKey(String);
 
 #[rocket::async_trait]
@@ -39,9 +36,8 @@ impl<'r> rocket::request::FromRequest<'r> for ApiKey {
 
 /// GET endpoint to return a counter as JSON (without incrementing)
 #[get("/api/counter/<name>")]
-async fn get_counter_json(name: &str, counters: &State<CounterMap>) -> Json<CounterResponse> {
-    let map = counters.lock().unwrap();
-    let count = map.get(name).cloned().unwrap_or(0);
+async fn get_counter_json(name: &str, counters: &State<PersistentCounterMap>) -> Json<CounterResponse> {
+    let count = counters.get(name);
     Json(CounterResponse {
         name: name.to_string(),
         count,
@@ -50,27 +46,24 @@ async fn get_counter_json(name: &str, counters: &State<CounterMap>) -> Json<Coun
 
 /// POST endpoint to increment a counter (returns the new count)
 #[post("/api/counter/<name>/increment")]
-async fn increment_counter_json(name: &str, counters: &State<CounterMap>) -> Json<CounterResponse> {
-    let mut map = counters.lock().unwrap();
-    let count = map.entry(name.to_string()).or_insert(0);
-    *count += 1;
+async fn increment_counter_json(name: &str, counters: &State<PersistentCounterMap>) -> Json<CounterResponse> {
+    let count = counters.increment(name);
     Json(CounterResponse {
         name: name.to_string(),
-        count: *count,
+        count,
     })
 }
 
 /// PUT endpoint to set a counter to a given value (for administration)
-/// The caller must include a valid API key in the header `x-api-key`.
+/// The caller must include a valid API key in the "x-api-key" header.
 #[put("/api/counter/<name>", data = "<new_value>")]
 async fn set_counter_json(
     name: &str,
     new_value: Json<CounterSetRequest>,
     _api_key: ApiKey,
-    counters: &State<CounterMap>,
+    counters: &State<PersistentCounterMap>,
 ) -> Json<CounterResponse> {
-    let mut map = counters.lock().unwrap();
-    map.insert(name.to_string(), new_value.count);
+    counters.set(name, new_value.count);
     Json(CounterResponse {
         name: name.to_string(),
         count: new_value.count,
@@ -79,12 +72,12 @@ async fn set_counter_json(
 
 /// GET endpoint to return an SVG counter image.
 /// Each time the image is requested, the counter is incremented.
-/// Query parameters allow for some customization (label, color, style).
+/// Query parameters allow for customization (label, color, style).
 #[get("/counter/<name>/svg?<options..>")]
 async fn svg_counter(
     name: &str,
     options: Option<SvgOptions>,
-    counters: &State<CounterMap>,
+    counters: &State<PersistentCounterMap>,
 ) -> (ContentType, String) {
     // Load the base CSS from assets/style.css.
     let base_css = include_str!("../assets/style.css");
@@ -98,10 +91,10 @@ async fn svg_counter(
             } else {
                 format!("#{}", color)
             };
-            custom_css.push_str(&format!(":root {{ --accent-primary: {}; }}", norm_color));
+            custom_css.push_str(&format!(":root {{ --background-counter: {}; }}", norm_color));
         }
         if let Some(style) = &opts.style {
-            custom_css.push_str(&format!(" .counter-text {{ {} }}", style));
+            custom_css.push_str(&format!(":root {{ {} }}", style));
         }
     }
     
@@ -113,13 +106,11 @@ async fn svg_counter(
         .and_then(|opts| opts.label.clone())
         .unwrap_or_else(|| "Visits".to_string());
     
-    // Increment the counter.
-    let mut map = counters.lock().unwrap();
-    let count = map.entry(name.to_string()).or_insert(0);
-    *count += 1;
+    // Increment the counter
+    let count = counters.increment(name);
     
     // Generate the SVG
-    let svg = svg_generator::generate_svg(&label, *count, &css);
+    let svg = svg_generator::generate_svg(&label, count, &css);
     
     (ContentType::new("image", "svg+xml"), svg)
 }
@@ -128,7 +119,7 @@ async fn svg_counter(
 fn rocket() -> _ {
     init_env();
     rocket::build()
-        .manage(Mutex::new(HashMap::<String, u64>::new()))
+        .manage(PersistentCounterMap::new("counters.json"))
         .mount(
             "/",
             routes![
