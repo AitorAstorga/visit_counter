@@ -12,11 +12,9 @@
  </a>
 
  <h1 align="center">Visit Counter API</h1>
- <p align="center">
- <img 
-    src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=Visits" height=20
-    alt="Visit Counter" />
-</p>
+ <p align="center"> <img 
+    src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=Example%20Visits" height=20
+    alt="Visit Counter" /> </p>
 
  <p align="center">
  A self‑hostable API service in Rust for tracking website visits and generating customizable SVG counters.
@@ -76,6 +74,9 @@ If you simply want to utilize my API, you can simply add an `img` tag to your si
 - Page name: Don't forget to set it `https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME...`
 - `label`: The text shown to the left.
 - `style`: Directly embed CSS in here. Something like `":root { --background-counter: red; }"` would work.
+
+> [!TIP]
+> If you intend to use this in GitHub, make sure you encode all spaces with `%20`. [HTML URL Encoding Reference](https://www.w3schools.com/tags//ref_urlencode.asp)
 
 #### Customizing the SVG Appearance
 
