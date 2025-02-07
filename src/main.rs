@@ -5,34 +5,20 @@ mod models;
 mod persistent_counter;
 mod svg_generator;
 
-use models::{CounterResponse, CounterSetRequest, SvgOptions};
+use std::io::Cursor;
+
+use models::{ApiKey, CounterResponse, CounterSetRequest, SvgOptions, SvgResponse};
 use persistent_counter::PersistentCounterMap;
-use rocket::http::ContentType;
+
+use rocket::http::{ContentType, Status};
 use rocket::serde::json::Json;
-use rocket::State;
+use rocket::{Response, State};
+
 use svg_generator::build_custom_css;
 
 // Optionally load environment variables from .env.
 fn init_env() {
     dotenv::dotenv().ok();
-}
-
-/// Verify that the "x-api-key" header matches the API_KEY environment variable.
-pub struct ApiKey(String);
-
-#[rocket::async_trait]
-impl<'r> rocket::request::FromRequest<'r> for ApiKey {
-    type Error = ();
-
-    async fn from_request(req: &'r rocket::request::Request<'_>) -> rocket::request::Outcome<Self, Self::Error> {
-        let api_key = req.headers().get_one("x-api-key");
-        if let Some(api_key) = api_key {
-            if api_key == std::env::var("API_KEY").expect("API_KEY must be set") {
-                return rocket::request::Outcome::Success(ApiKey(api_key.to_string()));
-            }
-        }
-        rocket::request::Outcome::Error((rocket::http::Status::Unauthorized, ()))
-    }
 }
 
 /// GET endpoint to return a counter as JSON (without incrementing)
@@ -79,32 +65,41 @@ async fn svg_counter(
     name: &str,
     options: Option<SvgOptions>,
     counters: &State<PersistentCounterMap>,
-) -> (ContentType, String) {
+) -> Result<SvgResponse, Status> {
     // Load the base CSS from assets/style.css.
     let base_css = include_str!("../assets/style.css");
-    
+
     // Build custom CSS if parameters are provided.
     let custom_css = build_custom_css(options.clone());
-    
+
     // Combine the base CSS with the custom CSS.
     let css = format!("{}\n{}", base_css, custom_css);
-    
+
     let label = options
         .as_ref()
         .and_then(|opts| opts.label.clone())
         .unwrap_or_else(|| "Visits".to_string());
-    
+
     // Increment the counter
     let count = counters.increment(name);
 
     // Get width and height
     let width = options.clone().unwrap_or_default().width.unwrap_or(150);
     let height = options.clone().unwrap_or_default().height.unwrap_or(20);
-    
+
     // Generate the SVG
     let svg = svg_generator::generate_svg(&label, count, &css, width, height);
-    
-    (ContentType::new("image", "svg+xml"), svg)
+
+    // Build a response with  caching headers not to store the response
+    let response = Response::build()
+        .header(ContentType::new("image", "svg+xml"))
+        .raw_header("Cache-Control", "max-age=0, no-cache, no-store, must-revalidate")
+        .raw_header("Pragma", "no-cache")
+        .raw_header("Expires", "0")
+        .sized_body(svg.len(), Cursor::new(svg))
+        .finalize();
+
+    Ok(SvgResponse(response))
 }
 
 #[launch]

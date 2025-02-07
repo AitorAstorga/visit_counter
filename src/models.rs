@@ -1,5 +1,7 @@
 use rocket::serde::{Deserialize, Serialize};
 use rocket::form::FromForm;
+use rocket::{Request, Response};
+use rocket::response::{Responder, Result as RocketResult};
 
 /// JSON response structure for counter endpoints.
 #[derive(Serialize)]
@@ -45,4 +47,32 @@ pub struct SvgOptions {
     pub background_counter: Option<String>,
     pub label_color: Option<String>,
     pub counter_color: Option<String>,
+}
+
+pub struct SvgResponse(
+    pub Response<'static>
+);
+
+impl<'r> Responder<'r, 'static> for SvgResponse {
+    fn respond_to(self, _req: &'r Request<'_>) -> RocketResult<'static> {
+        Ok(self.0)
+    }
+}
+
+/// Verify that the "x-api-key" header matches the API_KEY environment variable.
+pub struct ApiKey(String);
+
+#[rocket::async_trait]
+impl<'r> rocket::request::FromRequest<'r> for ApiKey {
+    type Error = ();
+
+    async fn from_request(req: &'r rocket::request::Request<'_>) -> rocket::request::Outcome<Self, Self::Error> {
+        let api_key = req.headers().get_one("x-api-key");
+        if let Some(api_key) = api_key {
+            if api_key == std::env::var("API_KEY").expect("API_KEY must be set") {
+                return rocket::request::Outcome::Success(ApiKey(api_key.to_string()));
+            }
+        }
+        rocket::request::Outcome::Error((rocket::http::Status::Unauthorized, ()))
+    }
 }
