@@ -10,6 +10,7 @@ use persistent_counter::PersistentCounterMap;
 use rocket::http::ContentType;
 use rocket::serde::json::Json;
 use rocket::State;
+use svg_generator::build_custom_css;
 
 // Optionally load environment variables from .env.
 fn init_env() {
@@ -72,7 +73,7 @@ async fn set_counter_json(
 
 /// GET endpoint to return an SVG counter image.
 /// Each time the image is requested, the counter is incremented.
-/// Query parameters allow for customization (label, color, style).
+/// Query parameters allow for customization (label, color, style...).
 #[get("/counter/<name>/svg?<options..>")]
 async fn svg_counter(
     name: &str,
@@ -83,20 +84,7 @@ async fn svg_counter(
     let base_css = include_str!("../assets/style.css");
     
     // Build custom CSS if parameters are provided.
-    let mut custom_css = String::new();
-    if let Some(opts) = &options {
-        if let Some(color) = &opts.color {
-            let norm_color = if color.starts_with('#') {
-                color.clone()
-            } else {
-                format!("#{}", color)
-            };
-            custom_css.push_str(&format!(":root {{ --background-counter: {}; }}", norm_color));
-        }
-        if let Some(style) = &opts.style {
-            custom_css.push_str(&format!(":root {{ {} }}", style));
-        }
-    }
+    let custom_css = build_custom_css(options.clone());
     
     // Combine the base CSS with the custom CSS.
     let css = format!("{}\n{}", base_css, custom_css);

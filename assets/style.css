@@ -1,13 +1,102 @@
-/* Colors based on nyakotech.com*/
+/* External CSS for SVG Counter */
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
+
 :root {
-  /* Background Colors */
-  --background-page: #000000; /* General background */
-  --background-body: #18181b; /* Body background */
-  --background-navbar: #64094d; /* Navbar background */
+  /* SVG Dimensions */
+  --width: 150px;
+  --height: 20px;
+  --label-width: 100px;
+  --counter-width: 50px;
+  --radius: 3px;
 
-  /* Accent Colors */
-  --accent-primary: #DC26B6;
+  /* Gradient Settings */
+  --grad-stop1-color: #bbb;
+  --grad-stop1-opacity: 0.1;
+  --grad-stop2-opacity: 0.1;
 
-  /* Hover Colors */
-  --hover-primary: #C323B8;
+  /* Text Settings */
+  --font-family: 'Comfortaa', 'Metrophobic', sans-serif;
+  --font-size: 11px;
+  --label-offset-x: 50px;
+  --label-offset-y: 15px;
+  --counter-offset-x: 125px;
+  --counter-offset-y: 15px;
+  --label-shadow-offset: 1px;
+  --counter-shadow-offset: 1px;
+  --shadow-fill: #010101;
+  --shadow-opacity: 0.3;
+
+  /* Color Palette (NyakoTech Inspired) */
+  --background-label: #18181b;
+  --background-counter: #DC26B6;
+  --label-color: #fff;
+  --counter-color: #fff;
+}
+
+/* Set the dimensions of the SVG via its class */
+.svg-counter {
+  width: var(--width);
+  height: var(--height);
+}
+
+/* Mask rectangle (the rounded border) */
+.mask-rect {
+  width: var(--width);
+  height: var(--height);
+  /* Note: Some properties like rx may not be styleable via CSS; if not, consider hardcoding in the SVG or using JavaScript */
+  rx: var(--radius);
+}
+
+/* Left section: label background */
+.left-rect {
+  width: var(--label-width);
+  height: var(--height);
+  fill: var(--background-label);
+}
+
+/* Right section: counter background */
+.right-rect {
+  width: var(--counter-width);
+  height: var(--height);
+  fill: var(--background-counter);
+  transform: translateX(var(--label-width));
+}
+
+/* Overlay for gradient effect */
+.overlay-rect {
+  width: var(--width);
+  height: var(--height);
+}
+
+/* Text group styling */
+.text-group {
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  fill: #fff;
+  text-anchor: middle;
+}
+
+/* Position label and counter via CSS transforms */
+.label-shadow {
+  transform: translate(var(--label-offset-x), var(--label-offset-y));
+  fill: var(--shadow-fill);
+  fill-opacity: var(--shadow-opacity);
+}
+
+.label {
+  transform: translate(var(--label-offset-x), calc(var(--label-offset-y) - var(--label-shadow-offset)));
+  fill: var(--label-color);
+}
+
+.count-shadow {
+  transform: translate(var(--counter-offset-x), var(--counter-offset-y));
+  fill: var(--shadow-fill);
+  fill-opacity: var(--shadow-opacity);
+}
+
+.count {
+  transform: translate(var(--counter-offset-x), calc(var(--counter-offset-y) - var(--counter-shadow-offset)));
+  fill: var(--counter-color);
 }
