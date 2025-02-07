@@ -12,6 +12,11 @@
  </a>
 
  <h1 align="center">Visit Counter API</h1>
+ <p align="center">
+ <img 
+    src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=Visits" height=20
+    alt="Visit Counter" />
+</p>
 
  <p align="center">
  A self‑hostable API service in Rust for tracking website visits and generating customizable SVG counters.
@@ -63,12 +68,12 @@ The Visit Counter API is a lightweight, self‑hostable backend service built in
 If you simply want to utilize my API, you can simply add an `img` tag to your site:
 ```html
 <img
-    src="https://ak5nas.eu/visit_counter/YOUR_PAGE_NAME?label=YOUR_TEXT&color=YOUR_COLOR&style=font-weight:bold;"
+    src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=YOUR_TEXT&color=YOUR_COLOR&style=font-weight:bold;"
     alt="Visit Counter" />
 ```
 
 #### Parameters
-- Page name: Don't forget to set it `https://ak5nas.eu/visit_counter/YOUR_PAGE_NAME`
+- Page name: Don't forget to set it `https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME...`
 - `label`: The text shown to the left.
 - `style`: Directly embed CSS in here. Something like `":root { --background-counter: red; }"` would work.
 
@@ -228,14 +233,15 @@ A sample
 ```yaml
 version: "3"
 services:
- counter:
- build: .
- ports:
- - "8000:8000"
- environment:
- ROCKET_ADDRESS: "0.0.0.0"
- ROCKET_PORT: "8000"
- API_KEY: "your_secret_api_key_here"
+  counter:
+    container_name: visit-counter
+    image: ghcr.io/aitorastorga/aichan-visit-counter:latest
+    ports:
+      - "8000:8000"
+    environment:
+      ROCKET_ADDRESS: "0.0.0.0"
+      ROCKET_PORT: "8000"
+      API_KEY: "your_secret_api_key_here"
 ```
 
 <p align="right">(<a href="#docker-deployment">back to top</a>)</p>

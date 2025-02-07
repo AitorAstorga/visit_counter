@@ -1,6 +1,7 @@
 version: "3"
 services:
   counter:
+    container_name: visit-counter
     image: ghcr.io/aitorastorga/aichan-visit-counter:latest
     ports:
       - "8000:8000"
