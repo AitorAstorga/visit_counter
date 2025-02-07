@@ -96,9 +96,13 @@ async fn svg_counter(
     
     // Increment the counter
     let count = counters.increment(name);
+
+    // Get width and height
+    let width = options.clone().unwrap_or_default().width.unwrap_or(150);
+    let height = options.clone().unwrap_or_default().height.unwrap_or(20);
     
     // Generate the SVG
-    let svg = svg_generator::generate_svg(&label, count, &css);
+    let svg = svg_generator::generate_svg(&label, count, &css, width, height);
     
     (ContentType::new("image", "svg+xml"), svg)
 }

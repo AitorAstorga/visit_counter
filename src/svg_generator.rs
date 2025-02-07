@@ -4,10 +4,10 @@ use crate::models::SvgOptions;
 /// * `label` - The label to display on the left side.
 /// * `count` - The counter value to display on the right side.
 /// * `css`   - The CSS to embed in the SVG.
-pub fn generate_svg(label: &str, count: u64, css: &str) -> String {
+pub fn generate_svg(label: &str, count: u64, css: &str, width: u32, height: u32) -> String {
   format!(
 r##"<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" class="svg-counter">
+<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" class="svg-counter">
 <style type="text/css"><![CDATA[
 {css}
 ]]></style>
@@ -32,6 +32,8 @@ r##"<?xml version="1.0" encoding="UTF-8"?>
   <text class="count">{count}</text>
 </g>
 </svg>"##,
+      width = width,
+      height = height,
       css = css,
       label = label,
       count = count

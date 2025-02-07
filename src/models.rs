@@ -17,7 +17,7 @@ pub struct CounterSetRequest {
 }
 
 /// Query parameters for the SVG endpoint. Derives `FromForm` so Rocket can parse query parameters into this struct.
-#[derive(FromForm, Clone)]
+#[derive(FromForm, Clone, Default)]
 pub struct SvgOptions {
     pub label: Option<String>,
     pub style: Option<String>,
