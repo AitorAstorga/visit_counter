@@ -243,6 +243,8 @@ services:
       ROCKET_ADDRESS: "0.0.0.0"
       ROCKET_PORT: "8000"
       API_KEY: "your_secret_api_key_here"
+    volumes:
+      - /PATH_TO_YOUR_DATA:/data
 ```
 
 <p align="right">(<a href="#docker-deployment">back to top</a>)</p>

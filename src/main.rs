@@ -106,7 +106,7 @@ async fn svg_counter(
 fn rocket() -> _ {
     init_env();
     rocket::build()
-        .manage(PersistentCounterMap::new("counters.json"))
+        .manage(PersistentCounterMap::new("/data/counters.json"))
         .mount(
             "/",
             routes![
