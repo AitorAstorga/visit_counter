@@ -33,9 +33,12 @@
  <summary>Table of Contents</summary>
  <ol>
  <li><a href="#about-the-project">About The Project</a></li>
-  <ul>
- <li><a href="#usage">Usage</a></li>
- </ul>
+   <ul>
+      <li><a href="#usage">Usage</a></li>
+   </ul>
+   <ul>
+      <li><a href="#built-with">Built With</a></li>
+   </ul>
  </li>
  <li>
  <a href="#project-structure">Project Structure</a>
@@ -82,34 +85,38 @@ If you simply want to utilize my API, you can simply add an `img` tag to your si
 
 The style is controlled with the CSS variables defined `assets/style.css`. These constants can also be modified to adjust the appearance:
 - **SVG Dimensions**:
-   `width`: Overall width of the SVG (default: 150).
-   `height`: Overall height of the SVG (default: 20).
-   `label_width`: Width of the left section (label background) (default: 100).
-   `counter_width`: Width of the right section (counter background) (default: 50).
-   `radius`: Border radius for rounded corners (default: 3).
+   - `width`: Overall width of the SVG (default: 150).
+   - `height`: Overall height of the SVG (default: 20).
+   - `label_width`: Width of the left section (label background) (default: 100).
+   - `counter_width`: Width of the right section (counter background) (default: 50).
+   - `radius`: Border radius for rounded corners (default: 3).
 
 - **Gradient Settings**:
-   `grad_stop1_color`: Color of the first gradient stop (default: #bbb).
-   `grad_stop1_opacity`: Opacity of the first gradient stop (default: 0.1).
-   `grad_stop2_opacity`: Opacity of the second gradient stop (default: 0.1).
+   - `grad_stop1_color`: Color of the first gradient stop (default: #bbb).
+   - `grad_stop1_opacity`: Opacity of the first gradient stop (default: 0.1).
+   - `grad_stop2_opacity`: Opacity of the second gradient stop (default: 0.1).
 
 - **Text Settings**:
-   `font_family`: Font family used for the counter text (default: 'Metrophobic', 'Comfortaa', sans-serif).
-   `font_size`: Font size for the text (default: 11).
-   `label_offset_x`: X-coordinate for the label text (default: 50).
-   `label_offset_y`: Y-coordinate for the label text (default: 15).
-   `counter_offset_x`: X-coordinate for the counter text (default: 125).
-   `counter_offset_y`: Y-coordinate for the counter text (default: 15).
-   `shadow_fill`: Color used for the text drop shadow (default: #010101).
-   `shadow_opacity`: Opacity of the text drop shadow (default: 0.3).
+   - `font_family`: Font family used for the counter text (default: 'Metrophobic', 'Comfortaa', sans-serif).
+   - `font_size`: Font size for the text (default: 11).
+   - `label_offset_x`: X-coordinate for the label text (default: 50).
+   - `label_offset_y`: Y-coordinate for the label text (default: 15).
+   - `counter_offset_x`: X-coordinate for the counter text (default: 125).
+   - `counter_offset_y`: Y-coordinate for the counter text (default: 15).
+   - `shadow_fill`: Color used for the text drop shadow (default: #010101).
+   - `shadow_opacity`: Opacity of the text drop shadow (default: 0.3).
 
 - **Color Settings (NyakoTech Inspired)**:
-   `background_label`: Background for the label section (default: #18181b).
-   `background_counter`: Background for the counter section (default: #DC26B6).
-   `label_color`: Color of the label text (default:#fff).
-   `counter_color`: Color of the counter text (default:#fff).
+   - `background_label`: Background for the label section (default: #18181b).
+   - `background_counter`: Background for the counter section (default: #DC26B6).
+   - `label_color`: Color of the label text (default:#fff).
+   - `counter_color`: Color of the counter text (default:#fff).
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
+
+### Built With
+- ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
+- ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Project Structure
 
@@ -274,6 +281,12 @@ Aitor Astorga Saez de Vicuña - a.astorga.sdv@protonmail.com
 Project Link: [https://github.com/AitorAstorga/visit_counter](https://github.com/AitorAstorga/visit_counter)
 
 <p align="right">(<a href="#contact">back to top</a>)</p>
+
+## Acknowledgments
+
+This is based on [Anton Komarev's](https://komarev.com/anton) [github-profile-views-counter](https://github.com/antonkomarev/github-profile-views-counter), but made in Rust.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [contributors-shield]: https://img.shields.io/github/contributors/AitorAstorga/visit_counter.svg?style=for-the-badge
