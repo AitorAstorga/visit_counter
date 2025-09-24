@@ -1,0 +1,54 @@
+name: Build & push to Forgejo Registry
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # ---- change these to match your setup ----
+  REGISTRY: git.prisma.moe                 # your Forgejo domain
+  NAMESPACE: aichan                        # your Forgejo user/org
+  IMAGE_NAME: visit_counter                # repo/image name
+  TAG: latest
+  # -----------------------------------------
+  # Credentials for logging in to your Forgejo container registry.
+  # Set these as repository secrets so they are not exposed in logs.
+  FORGEJO_USER: ${{ secrets.FORGEJO_USER }}   # your Forgejo username (not email)
+  FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }} # PAT with read:package + write:package
+
+jobs:
+  build:
+    # Use a runner label that has Docker available (common label is 'docker')
+    runs-on: docker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install the Docker CLI
+      - name: Install Docker CLI (Debian)
+        run: |
+          apt-get update
+          apt-get install -y docker.io ca-certificates
+          docker info
+
+      # Build the Docker image (tag directly with full registry path)
+      - name: Build
+        run: docker build -t ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${TAG} .
+
+      # Log in to the Forgejo registry
+      - name: Login to registry (push only)
+        if: github.event_name == 'push'
+        run: |
+          docker logout "${REGISTRY}" || true
+          # avoid stray newline issues
+          printf '%s' "${FORGEJO_TOKEN}" | docker login "${REGISTRY}" -u "${FORGEJO_USER}" --password-stdin
+          # sanity check: should print 200
+          apt-get update && apt-get install -y curl >/dev/null
+          curl -s -o /dev/null -w 'v2 status=%{http_code}\n' -u "${FORGEJO_USER}:${FORGEJO_TOKEN}" "https://${REGISTRY}/v2/"
+
+      # Push the image (skip on PRs)
+      - name: Push (push only)
+        if: github.event_name == 'push'
+        run: docker push ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${TAG}

@@ -1,10 +1,6 @@
-[package]
-name = "visit_counter"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-dotenv = "0.15.0"
-rocket = { version = "0.5.1", features = ["json"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0.138"
+[workspace]
+members = [
+    "backend_visit_counter",
+    "frontend_visit_counter",
+]
+resolver = "2"

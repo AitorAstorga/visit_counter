@@ -1,0 +1,26 @@
+services:
+  visit-counter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: visit-counter-dev
+    ports:
+      - "8000:8000"
+    environment:
+      - ROCKET_ADDRESS=0.0.0.0
+      - ROCKET_PORT=8000
+      - ADMIN_PASSWORD=admin123
+      - API_KEY=your_secret_api_key_here
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
+    networks:
+      - visit-counter-network
+
+networks:
+  visit-counter-network:
+    driver: bridge
+
+volumes:
+  visit-counter-data:
+    driver: local

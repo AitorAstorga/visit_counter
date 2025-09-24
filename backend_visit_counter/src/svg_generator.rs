@@ -1,3 +1,4 @@
+// backend_visit_counter/src/svg_generator.rs
 use crate::models::SvgOptions;
 
 /// Generates an SVG counter image.

@@ -1,7 +1,9 @@
+// backend_visit_counter/src/models.rs
 use rocket::serde::{Deserialize, Serialize};
 use rocket::form::FromForm;
 use rocket::{Request, Response};
 use rocket::response::{Responder, Result as RocketResult};
+use chrono::{DateTime, Utc};
 
 /// JSON response structure for counter endpoints.
 #[derive(Serialize)]
@@ -75,4 +77,40 @@ impl<'r> rocket::request::FromRequest<'r> for ApiKey {
         }
         rocket::request::Outcome::Error((rocket::http::Status::Unauthorized, ()))
     }
+}
+
+/// Badge data structure for admin management
+#[derive(Serialize, Deserialize, Clone, Debug)]
+#[serde(crate = "rocket::serde")]
+pub struct Badge {
+    pub name: String,
+    pub count: u64,
+    pub created_at: DateTime<Utc>,
+    pub last_accessed: DateTime<Utc>,
+}
+
+/// Request to create/update a badge
+#[derive(Deserialize)]
+#[serde(crate = "rocket::serde")]
+pub struct BadgeCreateRequest {
+    pub name: String,
+    pub count: Option<u64>,
+}
+
+/// Response for badge operations
+#[derive(Serialize)]
+#[serde(crate = "rocket::serde")]
+pub struct BadgeResponse {
+    pub name: String,
+    pub count: u64,
+    pub created_at: DateTime<Utc>,
+    pub last_accessed: DateTime<Utc>,
+}
+
+/// List all badges response
+#[derive(Serialize)]
+#[serde(crate = "rocket::serde")]
+pub struct BadgeListResponse {
+    pub badges: Vec<BadgeResponse>,
+    pub total: usize,
 }

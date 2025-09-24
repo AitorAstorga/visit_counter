@@ -1,30 +1,23 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
- <a href="https://github.com/AitorAstorga/visit_counter">
+ <a href="https://git.prisma.moe/aichan/visit_counter">
  </a>
 
  <h1 align="center">Visit Counter API</h1>
- <p align="center"> <img 
-    src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=Example%20Visits" height=20
+ <p align="center"> <img
+    src="https://visitcounter.aichan.ovh/counter/visit_counter_project/svg?label=Project%20Visits" height=20
     alt="Visit Counter" /> </p>
 
  <p align="center">
- A self‑hostable API service in Rust for tracking website visits and generating customizable SVG counters.
+ A self‑hostable API service in Rust for tracking website visits and generating customizable SVG counters with a Yew WebAssembly frontend.
  <br />
  <br />
- <a href="https://github.com/AitorAstorga/visit_counter">View Demo</a>
+ <a href="https://git.prisma.moe/aichan/visit_counter">View Demo</a>
  ·
- <a href="https://github.com/AitorAstorga/visit_counter/issues">Report Bug</a>
+ <a href="https://git.prisma.moe/aichan/visit_counter/issues">Report Bug</a>
  ·
- <a href="https://github.com/AitorAstorga/visit_counter/issues">Request Feature</a>
+ <a href="https://git.prisma.moe/aichan/visit_counter/issues">Request Feature</a>
  </p>
 </div>
 
@@ -47,7 +40,7 @@
  </ul>
  </li>
  <li><a href="#getting-started">Getting Started</a></li>
- <li><a href="#testing-the-api">Testing the API</a></li>
+ <li><a href="#testing">Testing</a></li>
  <li><a href="#docker-deployment">Docker Deployment</a></li>
  <li><a href="#contributing">Contributing</a></li>
  <li><a href="#license">License</a></li>
@@ -57,16 +50,16 @@
 
 ## About The Project
 
-The Visit Counter API is a lightweight, self‑hostable backend service built in Rust using Rocket. It tracks website visits and dynamically generates SVG counters with customizable styling. This project is modularized as follows:
+The Visit Counter API is a lightweight, self‑hostable service built in Rust that tracks website visits and generates customizable SVG counters. The backend is built with Rocket. It features a web interface built with Yew WebAssembly for badge management and administration.
 
-- **SVG Generator Module**: All SVG-generation logic is contained in `src/svg_generator.rs`.
-- **External CSS**: Styling is maintained in `assets/style.css`, allowing easy customization of colors, fonts, and borders.
-- **API Endpoints**: Endpoints are provided to get, increment, and set counter values, along with an SVG endpoint for embedding counters into webpages.
-- **Persistent Storage**: Counter data is stored in `counters.json` via a file-based persistence module (`src/persistent_counter.rs`), ensuring counters are preserved across API restarts.
+- **SVG Generator Module**: All SVG-generation logic is contained in `backend_visit_counter/src/svg_generator.rs`.
+- **Web Interface**: Yew WebAssembly frontend for badge management and administration.
+- **API Endpoints**: RESTful API for counter operations and admin management.
+- **Persistent Storage**: JSON-based storage with authentication for administrative operations.
 
 ### Usage
 
-If you simply want to utilize my API, you can simply add an `img` tag to your site:
+If you simply want to utilize the API, you can add an `img` tag to your site:
 ```html
 <img
     src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=YOUR_TEXT&color=YOUR_COLOR&style=font-weight:bold;"
@@ -81,42 +74,10 @@ If you simply want to utilize my API, you can simply add an `img` tag to your si
 > [!TIP]
 > If you intend to use this in GitHub, make sure you encode all spaces with `%20`. [HTML URL Encoding Reference](https://www.w3schools.com/tags//ref_urlencode.asp)
 
-#### Customizing the SVG Appearance
-
-The style is controlled with the CSS variables defined `assets/style.css`. These constants can also be modified to adjust the appearance:
-- **SVG Dimensions**:
-   - `width`: Overall width of the SVG (default: 150).
-   - `height`: Overall height of the SVG (default: 20).
-   - `label_width`: Width of the left section (label background) (default: 100).
-   - `counter_width`: Width of the right section (counter background) (default: 50).
-   - `radius`: Border radius for rounded corners (default: 3).
-
-- **Gradient Settings**:
-   - `grad_stop1_color`: Color of the first gradient stop (default: #bbb).
-   - `grad_stop1_opacity`: Opacity of the first gradient stop (default: 0.1).
-   - `grad_stop2_opacity`: Opacity of the second gradient stop (default: 0.1).
-
-- **Text Settings**:
-   - `font_family`: Font family used for the counter text (default: 'Metrophobic', 'Comfortaa', sans-serif).
-   - `font_size`: Font size for the text (default: 11).
-   - `label_offset_x`: X-coordinate for the label text (default: 50).
-   - `label_offset_y`: Y-coordinate for the label text (default: 15).
-   - `counter_offset_x`: X-coordinate for the counter text (default: 125).
-   - `counter_offset_y`: Y-coordinate for the counter text (default: 15).
-   - `shadow_fill`: Color used for the text drop shadow (default: #010101).
-   - `shadow_opacity`: Opacity of the text drop shadow (default: 0.3).
-
-- **Color Settings (NyakoTech Inspired)**:
-   - `background_label`: Background for the label section (default: #18181b).
-   - `background_counter`: Background for the counter section (default: #DC26B6).
-   - `label_color`: Color of the label text (default:#fff).
-   - `counter_color`: Color of the counter text (default:#fff).
-
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
 ### Built With
-- ![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)
-- ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Rust](static/badges/rust-badge.svg) ![WebAssembly](static/badges/webassembly-badge.svg) [![Yew](static/badges/yew-badge.svg)](#) [![Rocket](static/badges/rocket-badge.svg)](#) ![Docker](static/badges/docker-badge.svg)
 
 ## Project Structure
 
@@ -124,22 +85,34 @@ The project is organized as follows:
 
 ```
 visit_counter/
-├── Cargo.toml
-├── .env # Environment variables file (optional)
-├── assets/
-│ └── style.css # External CSS for SVG styling
-└── src/
- ├── main.rs # Main application with API endpoints
- ├── models.rs # Data structures
- ├── svg_generator.rs# Module for generating SVG content
- └── persistent_counter.rs # Module for file-based persistent storage
+├── backend_visit_counter/    # Rocket backend API
+│   ├── src/
+│   │   ├── main.rs
+│   │   ├── models.rs
+│   │   ├── svg_generator.rs
+│   │   └── persistent_counter.rs
+│   └── Cargo.toml
+├── frontend_visit_counter/   # Yew WebAssembly frontend
+│   ├── src/
+│   │   ├── main.rs
+│   │   ├── app.rs
+│   │   ├── components/
+│   │   ├── services.rs
+│   │   └── types.rs
+│   ├── index.html
+│   └── Cargo.toml
+├── static/assets/           # Shared CSS and assets
+│   ├── style.css
+│   ├── minimal-icons.css
+│   └── badges/
+└── data/                   # Persistent data storage
 ```
 
 ### Modules
 
-- models.rs: Contains data structures for counters and SVG options.
-- svg_generator.rs: Provides the `generate_svg` function that creates the SVG output.
-- main.rs: Defines API endpoints, loads environment variables, and integrates all modules.
+- **Backend**: Rocket-based REST API with SVG generation and persistent storage
+- **Frontend**: Yew WebAssembly application for badge management and admin interface
+- **Static Assets**: Shared CSS, icons, and badges stored locally
 
 <p align="right">(<a href="#project-structure">back to top</a>)</p>
 
@@ -151,99 +124,81 @@ Follow these instructions to set up a local instance of the Visit Counter API.
 
 - Rust installed
 - Cargo (bundled with Rust)
-- (Optional) Docker if you plan to deploy in a container
+- Trunk (for frontend development): `cargo install --locked trunk`
+- (Optional) Docker for containerized deployment
 
-### Installation
+### Development Setup
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/AitorAstorga/visit_counter.git
-   cd visit_counter
-   ```
+#### Frontend Development
+```bash
+cd frontend_visit_counter
+trunk serve
+```
+This starts the frontend development server at `http://localhost:8080`
 
-2. (Optional) Create a `.env` file in the project root:
-   This file should define your API key:
-   ```env
-   API_KEY=your_secret_api_key_here
-   ```
+#### Backend Development
+```bash
+cd backend_visit_counter
+cargo run
+```
+This starts the API server at `http://localhost:8000`
 
-3. Run the application locally:
-   ```bash
-   export API_KEY=your_secret_api_key_here # if not using `.env`
-   cargo run
-   ```
+#### Production Build
+Frontend:
+```bash
+cd frontend_visit_counter
+trunk build --release
+```
 
-By default, Rocket runs on `localhost:8000`.
+Backend:
+```bash
+cd backend_visit_counter
+cargo build --release
+```
 
 <p align="right">(<a href="#getting-started">back to top</a>)</p>
 
-## Testing the API
+## Testing
 
-You can test the endpoints using your browser, curl, or any HTTP client.
+**Recommended**: Use the development Docker Compose setup for testing:
 
-### API Endpoints
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
 
-- GET Counter Value (JSON):
+This will start both the backend and frontend services in a development environment with hot reloading and proper networking.
+
+### Manual API Testing
+
+You can also test the endpoints using curl or any HTTP client:
+
+- **GET Counter Value (JSON)**:
    ```bash
    curl http://localhost:8000/api/counter/test
    ```
 
-- Increment Counter (JSON):
+- **Increment Counter (JSON)**:
    ```bash
    curl -X POST http://localhost:8000/api/counter/test/increment
    ```
 
-- Set Counter Value (JSON, Requires API Key):
+- **SVG Counter Endpoint**:
    ```bash
-   curl -X PUT http://localhost:8000/api/counter/test \
-   -H "Content-Type: application/json" \
-   -H "x-api-key: your_secret_api_key_here" \
-   -d '{"count": 123}'
+   curl "http://localhost:8000/counter/test/svg?label=Page%20Views&color=ff5733"
    ```
 
-- SVG Counter Endpoint:
- Open your browser or use curl:
-   ```bash
-   curl "http://localhost:8000/counter/test/svg?label=Page%20Views&color=ff5733&style=font-weight:bold;"
-   ```
-   This returns an SVG image with your counter, which you can embed using an `<img>` tag.
-
-<p align="right">(<a href="#testing-the-api">back to top</a>)</p>
+<p align="right">(<a href="#testing">back to top</a>)</p>
 
 ## Docker Deployment
 
-If you prefer containerized deployment, you can use Docker.
+### Using Docker Compose (Recommended)
 
-### Dockerfile
-
-A sample
-```dockerfile
-# Use an official Rust image as the builder.
-FROM rust:1.70 as builder
-
-WORKDIR /app
-COPY Cargo.toml Cargo.lock ./
-COPY src/ ./src/
-COPY assets/ ./assets/
-
-RUN cargo build --release
-
-# Use a minimal image for the final binary.
-FROM debian:buster-slim
-COPY --from=builder /app/target/release/visit_counter /usr/local/bin/
-EXPOSE 8000
-CMD ["visit_counter"]
-```
-
-### docker-compose.yml
-
-A sample
+Create a `docker-compose.yml` file:
 ```yaml
-version: "3"
 services:
-  counter:
+  visit_counter:
     container_name: visit-counter
-    image: ghcr.io/aitorastorga/aichan-visit-counter:latest
+    image: git.prisma.moe/aichan/visit_counter:latest
     ports:
       - "8000:8000"
     environment:
@@ -251,7 +206,13 @@ services:
       ROCKET_PORT: "8000"
       API_KEY: "your_secret_api_key_here"
     volumes:
-      - /PATH_TO_YOUR_DATA:/data
+      - ./data:/data
+    restart: unless-stopped
+```
+
+Then run:
+```bash
+docker-compose up -d
 ```
 
 <p align="right">(<a href="#docker-deployment">back to top</a>)</p>
@@ -260,7 +221,7 @@ services:
 
 Contributions are welcome! Please fork the repository, make your changes, and open a pull request.
 
-1. Fork the Project
+1. Fork the Project on [Forgejo](https://git.prisma.moe/aichan/visit_counter)
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
@@ -278,26 +239,30 @@ Distributed under the European Union Public License v1.2. See `LICENSE` for more
 
 Aitor Astorga Saez de Vicuña - a.astorga.sdv@protonmail.com
 
-Project Link: [https://github.com/AitorAstorga/visit_counter](https://github.com/AitorAstorga/visit_counter)
+Project Link: [https://git.prisma.moe/aichan/visit_counter](https://git.prisma.moe/aichan/visit_counter)
 
 <p align="right">(<a href="#contact">back to top</a>)</p>
 
 ## Acknowledgments
 
-This is based on [Anton Komarev's](https://komarev.com/anton) [github-profile-views-counter](https://github.com/antonkomarev/github-profile-views-counter), but made in Rust.
+This is based on [Anton Komarev's](https://komarev.com/anton) [github-profile-views-counter](https://github.com/antonkomarev/github-profile-views-counter), but made in Rust with a cool WebAssembly frontend.
+
+Thanks to these amazing projects and technologies!
+
+- [Rust Yew](https://yew.rs/) - A modern Rust framework for creating multi-threaded front-end web apps with WebAssembly
+- [Rocket](https://rocket.rs/) - A web framework for Rust that makes it simple to write fast, secure web applications
+- [WebAssembly](https://webassembly.org/) - A binary instruction format for a stack-based virtual machine
+- [Font Awesome](https://fontawesome.com/) - Icons used in the web interface (Free License)
+
+### Icon Attribution
+
+This project uses Font Awesome icons, which are available under the Font Awesome Free License:
+
+- **Icons**: CC BY 4.0 License (https://creativecommons.org/licenses/by/4.0/)
+- **Fonts**: SIL OFL 1.1 License (https://scripts.sil.org/OFL)
+- **Code**: MIT License (https://opensource.org/licenses/MIT)
+
+The following Font Awesome icons are used in this project:
+- `fa-chart-line`, `fa-shield-alt`, `fa-sync-alt`, `fa-list`, `fa-plus`, `fa-eye`, `fa-calendar`, `fa-clock`, `fa-edit`, `fa-trash`, `fa-code`, `fa-check`, `fa-copy`, `fa-key`, `fa-home`, `fa-cog`, `fa-sign-in-alt`, `fa-sign-out-alt`, `fa-sun`, `fa-moon`, `fa-magic`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[contributors-shield]: https://img.shields.io/github/contributors/AitorAstorga/visit_counter.svg?style=for-the-badge
-[contributors-url]: https://github.com/AitorAstorga/visit_counter/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/AitorAstorga/visit_counter.svg?style=for-the-badge
-[forks-url]: https://github.com/AitorAstorga/visit_counter/network/members
-[stars-shield]: https://img.shields.io/github/stars/AitorAstorga/visit_counter.svg?style=for-the-badge
-[stars-url]: https://github.com/AitorAstorga/visit_counter/stargazers
-[issues-shield]: https://img.shields.io/github/issues/AitorAstorga/visit_counter.svg?style=for-the-badge
-[issues-url]: https://github.com/AitorAstorga/visit_counter/issues
-[license-shield]: https://img.shields.io/github/license/AitorAstorga/visit_counter.svg?style=for-the-badge
-[license-url]: https://github.com/AitorAstorga/visit_counter/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/aitor-astorga-saez-de-vicuña

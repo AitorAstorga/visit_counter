@@ -1,3 +1,4 @@
 /target
 .env
 counters.json
+counters_badges.json

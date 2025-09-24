@@ -1,0 +1,9 @@
+target/
+frontend_visit_counter/dist/
+frontend_visit_counter/target/
+backend_visit_counter/target/
+.git/
+.gitignore
+README.md
+*.md
+.env
