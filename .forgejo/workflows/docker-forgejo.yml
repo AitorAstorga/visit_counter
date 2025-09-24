@@ -2,9 +2,9 @@ name: Build & push to Forgejo Registry
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 env:
   # ---- change these to match your setup ----

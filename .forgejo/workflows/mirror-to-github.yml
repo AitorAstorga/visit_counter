@@ -2,7 +2,7 @@ name: Mirror to GitHub
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
     tags: [ "*" ]           # mirror tags, too
   delete:
     branches: [ "*" ]

@@ -28,9 +28,6 @@ RUN apt-get update && apt-get install -y pkg-config libssl-dev && rm -rf /var/li
 
 WORKDIR /app
 
-# First copy the local prisma_auth dependency
-COPY prisma_auth/ ./prisma_auth/
-
 # Copy backend files
 COPY backend_visit_counter/ ./backend_visit_counter/
 COPY static/ ./static/
