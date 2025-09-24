@@ -59,7 +59,11 @@ The Visit Counter API is a lightweight, self‑hostable service built in Rust th
 
 ### Usage
 
-If you simply want to utilize the API, you can add an `img` tag to your site:
+#### Web Interface
+Visit [**https://visitcounter.aichan.ovh/**](https://visitcounter.aichan.ovh/) to use the interactive badge generator interface. This web application allows you to customize your visit counter badge with a live preview and automatically generates the HTML code for you.
+
+#### Direct API Usage
+If you prefer to use the API directly, you can add an `img` tag to your site:
 ```html
 <img
     src="https://visitcounter.aichan.ovh/counter/YOUR_PAGE_NAME/svg?label=YOUR_TEXT&color=YOUR_COLOR&style=font-weight:bold;"
@@ -205,6 +209,7 @@ services:
       ROCKET_ADDRESS: "0.0.0.0"
       ROCKET_PORT: "8000"
       API_KEY: "your_secret_api_key_here"
+      ADMIN_PASSWORD: "your_admin_password_here"
     volumes:
       - ./data:/data
     restart: unless-stopped

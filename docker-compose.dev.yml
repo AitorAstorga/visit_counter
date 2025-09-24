@@ -9,8 +9,8 @@ services:
     environment:
       - ROCKET_ADDRESS=0.0.0.0
       - ROCKET_PORT=8000
-      - ADMIN_PASSWORD=admin123
       - API_KEY=your_secret_api_key_here
+      - ADMIN_PASSWORD=admin123
     volumes:
       - ./data:/data
     restart: unless-stopped
