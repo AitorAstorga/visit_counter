@@ -49,6 +49,16 @@ pub struct SvgOptions {
     pub background_counter: Option<String>,
     pub label_color: Option<String>,
     pub counter_color: Option<String>,
+    // Extended customization options
+    pub font_weight: Option<String>,
+    pub text_color: Option<String>,
+    pub background_color: Option<String>,
+    pub border_width: Option<u32>,
+    pub border_color: Option<String>,
+    pub border_radius: Option<u32>,
+    pub logo_url: Option<String>,
+    pub logo_width: Option<u32>,
+    pub element_positions: Option<String>, // "label,logo,counter" or similar format
 }
 
 pub struct SvgResponse(

@@ -610,3 +610,83 @@ body {
 .mb-2 { margin-bottom: 0.5rem; }
 .hidden { display: none !important; }
 .block { display: block !important; }
+
+/* Advanced customization panel styles */
+.advanced-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.75rem;
+}
+
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 1.2em;
+    color: var(--text-main);
+}
+
+.toggle-icon.rotated {
+    transform: rotate(45deg);
+}
+
+.advanced-panel {
+    background-color: var(--surface-hov);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.color-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.color-picker {
+    width: 50px;
+    height: 38px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+}
+
+.color-text {
+    flex: 1;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+/* Button outline variant */
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+}
+
+.btn-outline:hover {
+    background-color: var(--surface-hov);
+    border-color: var(--text-secondary);
+}

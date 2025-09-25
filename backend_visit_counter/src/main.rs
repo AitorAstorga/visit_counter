@@ -91,7 +91,7 @@ async fn svg_counter(
     let height = options.clone().unwrap_or_default().height.unwrap_or(20);
 
     // Generate the SVG
-    let svg = svg_generator::generate_svg(&label, count, &css, width, height);
+    let svg = svg_generator::generate_svg(&label, count, &css, width, height, options.as_ref());
 
     // Build a response with  caching headers not to store the response
     let response = Response::build()

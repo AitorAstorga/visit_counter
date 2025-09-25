@@ -151,6 +151,60 @@ impl ApiService {
             params.push(format!("style={}", urlencoding::encode(&config.style)));
         }
 
+        // Advanced customization parameters
+        if config.font_family != "Comfortaa, Metrophobic, sans-serif" {
+            params.push(format!("font_family={}", urlencoding::encode(&config.font_family)));
+        }
+
+        if config.font_size != 11 {
+            params.push(format!("font_size={}", config.font_size));
+        }
+
+        if config.font_weight != "normal" {
+            params.push(format!("font_weight={}", urlencoding::encode(&config.font_weight)));
+        }
+
+        if config.label_color != "#ffffff" {
+            params.push(format!("label_color={}", urlencoding::encode(&config.label_color)));
+        }
+
+        if config.counter_color != "#ffffff" {
+            params.push(format!("counter_color={}", urlencoding::encode(&config.counter_color)));
+        }
+
+        if config.background_label != "#18181b" {
+            params.push(format!("background_label={}", urlencoding::encode(&config.background_label)));
+        }
+
+        if config.background_counter != "#DC26B6" {
+            params.push(format!("background_counter={}", urlencoding::encode(&config.background_counter)));
+        }
+
+        if config.border_width != 0 {
+            params.push(format!("border_width={}", config.border_width));
+        }
+
+        if config.border_color != "#cccccc" {
+            params.push(format!("border_color={}", urlencoding::encode(&config.border_color)));
+        }
+
+        if config.border_radius != 3 {
+            params.push(format!("border_radius={}", config.border_radius));
+        }
+
+
+        if !config.logo_url.is_empty() {
+            params.push(format!("logo_url={}", urlencoding::encode(&config.logo_url)));
+        }
+
+        if config.logo_width != 30 {
+            params.push(format!("logo_width={}", config.logo_width));
+        }
+
+        if config.element_positions != "label,logo,counter" {
+            params.push(format!("element_positions={}", urlencoding::encode(&config.element_positions)));
+        }
+
         if !params.is_empty() {
             url.push('?');
             url.push_str(&params.join("&"));

@@ -74,6 +74,7 @@
 .text-group {
   font-family: var(--font-family);
   font-size: var(--font-size);
+  font-weight: var(--font-weight, normal);
   fill: #fff;
   text-anchor: middle;
 }

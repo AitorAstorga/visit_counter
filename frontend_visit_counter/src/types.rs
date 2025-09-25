@@ -82,6 +82,21 @@ pub struct BadgeConfig {
     pub style: String,
     pub width: u32,
     pub height: u32,
+    pub font_family: String,
+    pub font_size: u32,
+    pub font_weight: String,
+    pub text_color: String,
+    pub background_color: String,
+    pub label_color: String,
+    pub counter_color: String,
+    pub background_label: String,
+    pub background_counter: String,
+    pub border_width: u32,
+    pub border_color: String,
+    pub border_radius: u32,
+    pub logo_url: String,
+    pub logo_width: u32,
+    pub element_positions: String, // "label,logo,counter" format
 }
 
 impl Default for BadgeConfig {
@@ -92,6 +107,21 @@ impl Default for BadgeConfig {
             style: String::new(),
             width: 150,
             height: 20,
+            font_family: "Comfortaa, Metrophobic, sans-serif".to_string(),
+            font_size: 11,
+            font_weight: "normal".to_string(),
+            text_color: "#ffffff".to_string(),
+            background_color: "#18181b".to_string(),
+            label_color: "#ffffff".to_string(),
+            counter_color: "#ffffff".to_string(),
+            background_label: "#18181b".to_string(),
+            background_counter: "#DC26B6".to_string(),
+            border_width: 0,
+            border_color: "#cccccc".to_string(),
+            border_radius: 3,
+            logo_url: String::new(),
+            logo_width: 30,
+            element_positions: "label,logo,counter".to_string(),
         }
     }
 }
