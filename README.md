@@ -1,3 +1,19 @@
+<h2 align="center">⚠️ THIS IS A MIRROR ⚠️</h2>
+
+> [!WARNING]  
+> Hi there! This is a **read-only mirror**, automatically synced from our Forgejo instance.  
+>   
+> - 🛠️ All development happens on the primary Forgejo repository  
+> - 💬 You’re welcome to open Issues, Discussions, or even PRs here if it’s convenient — just know they may not be acted on directly, since the sync is one-way  
+>   
+> For the best chance of your contributions being merged, or for quicker responses, please head over to the main Forgejo repo.  
+>   
+> - Original repo: https://git.prisma.moe/aichan/visit_counter
+>   
+> — *Self-hosting 4 the win!*
+
+---
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -271,3 +287,7 @@ The following Font Awesome icons are used in this project:
 - `fa-chart-line`, `fa-shield-alt`, `fa-sync-alt`, `fa-list`, `fa-plus`, `fa-eye`, `fa-calendar`, `fa-clock`, `fa-edit`, `fa-trash`, `fa-code`, `fa-check`, `fa-copy`, `fa-key`, `fa-home`, `fa-cog`, `fa-sign-in-alt`, `fa-sign-out-alt`, `fa-sun`, `fa-moon`, `fa-magic`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+---
+
+> [!WARNING]
+> **🔗 This repository is automatically mirrored from a private Forgejo instance.**
